@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bluebird = require('bluebird');
-var fs = require('fs');
+var fs = require('fs'); 
 
 //incorporo cors
 var cors = require('cors');
@@ -62,6 +62,8 @@ mongoose.connect(url,opts)
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
+ 
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:4000");

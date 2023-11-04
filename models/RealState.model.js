@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
 
-var UserSchema = new mongoose.Schema({
+var RealStateSchema = new mongoose.Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique : true, dropDups: true},
     cellphone: {type: String, required: true},
@@ -10,7 +10,7 @@ var UserSchema = new mongoose.Schema({
     date: Date
 });
 
-UserSchema.plugin(mongoosePaginate);
-const User = mongoose.model('User', UserSchema);
+RealStateSchema.plugin(mongoosePaginate);
+const realstate = mongoose.model('realstate', RealStateSchema);
 
-module.exports = User;
+module.exports = realstate;

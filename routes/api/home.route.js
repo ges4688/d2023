@@ -1,15 +1,14 @@
 var express = require('express')
 var router = express.Router()
-var UserController = require('../../controllers/users.controller');
+var HomeController = require('../../controllers/homes.controller');
 var MailController = require('../../controllers/mail.controller');
-var Authorization = require('../../auth/authorization');
+//var Authorization = require('../../auth/authorization');
 
-router.get('/myProfile/:token', UserController.getUser);
-router.post('/updateUser/', UserController.updateUser);
-router.post('/registration', UserController.createUser);
-router.delete('/:id', Authorization, UserController.removeUser);
-router.post('/login', UserController.loginUser);
-router.post('/guardarImgUser', UserController.guardarImagenUser);
-router.post('/sendMail', MailController.sendEmail);
+router.get('/homes/:homeId', HomeController.getHome);
+router.get('/homes', HomeController.getHomes);
+router.post('/updateHome/', HomeController.updateHome);
+router.post('/registrationHome', HomeController.createHome);
+router.delete('/:homeId',  HomeController.removeHome);
+ 
 
 module.exports = router;

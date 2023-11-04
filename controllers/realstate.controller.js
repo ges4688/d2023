@@ -1,4 +1,4 @@
-var UserService = require('../services/user.service');
+var UserService = require('../services/realstate.service');
 var UserImgService =require('../services/userImg.service');
 
 _this = this;

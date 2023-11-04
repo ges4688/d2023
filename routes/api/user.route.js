@@ -9,7 +9,8 @@ router.post('/updateUser/', UserController.updateUser);
 router.post('/registration', UserController.createUser);
 router.delete('/:id', Authorization, UserController.removeUser);
 router.post('/login', UserController.loginUser);
-router.post('/guardarImgUser', UserController.guardarImagenUser);
-router.post('/sendMail', MailController.sendEmail);
+//router.post('/guardarImgUser', UserController.guardarImagenUser); no fueron probados
+//router.post('/sendMail', MailController.sendEmail); no fueron probados
+ 
 
 module.exports = router;

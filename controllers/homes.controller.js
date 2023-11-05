@@ -7,12 +7,11 @@ _this = this;
 // Crear una nueva propiedad
 exports.createHome = async function (req, res, next) {
     console.log("llegue al controller",req.body)
-    var home = {
-        userId: req.body.home.Id,
+    var Home = {
+        userId: req.body.home.userId,
         homeId: req.body.home.homeId,
         moneda: req.body.home.moneda,
         precio: req.body.home.precio,
-        // es un subdoc json
         direccion: {
             calle: req.body.home.direccion.calle,
             numero: req.body.home.direccion.numero,
@@ -22,7 +21,7 @@ exports.createHome = async function (req, res, next) {
             localidad: req.body.home.direccion.localidad,
             provincia: req.body.home.direccion.provincia,
             pais: req.body.home.direccion.pais,
-        },                                       // es un subdoc json
+        }, 
         geolocalizacion: {
             latitud: req.body.home.geolocalizacion.latitud,
             longitud: req.body.home.geolocalizacion.longitud,
@@ -34,7 +33,7 @@ exports.createHome = async function (req, res, next) {
         ambientes: req.body.home.ambientes,
         dormitorios: req.body.home.dormitorios,
         banos: req.body.home.banos,
-        amenities: req.body.home.amenities,          // es un subdoc json
+        amenities: req.body.home.amenities, 
         metrosCuadrados: {                                           
             cubiertos: req.body.home.metrosCuadrados.cubiertos,
             semidescubiertos: req.body.home.metrosCuadrados.semidescubiertos,
@@ -43,7 +42,7 @@ exports.createHome = async function (req, res, next) {
     };
 
     try {
-        var createdHome = await HomeService.createHome(home);
+        var createdHome = await HomeService.createHome(Home);
         return res.status(201).json({ status: 201, data: createdHome, message: "Successfully Created Home" });
     } catch (e) {
         return res.status(400).json({ status: 400, message: "Home Creation was Unsuccessful" });
@@ -54,8 +53,9 @@ exports.createHome = async function (req, res, next) {
 
 // Actualizar una propiedad existente
 exports.updateHome = async function (req, res, next) {
+    console.log("llegue al controller",req.body)
     var newHomeData = {
-        userId: req.body.home.Id,
+        userId: req.body.home.userId,
         homeId: req.body.home.homeId,
         moneda: req.body.home.moneda,
         precio: req.body.home.precio,
@@ -89,7 +89,8 @@ exports.updateHome = async function (req, res, next) {
     };
 
     try {
-        var oldHome = await HomeService.getHome(req.params.id);
+        var oldHome = await HomeService.getHomeByHomeId(req.params.homeId);
+        //console.log(oldHome);
         var updatedHome = await HomeService.updateHome(oldHome, newHomeData);
         return res.status(200).json({ status: 200, data: updatedHome, message: "Successfully Updated Home" });
     } catch (e) {
@@ -127,6 +128,14 @@ exports.getHome = async function (req, res, next) {
     }
 }
 
+exports.getHomeByUserId = async function (req, res, next) {
+    try {
+        var home = await HomeService.getHomeByUserId(req.params.userId);
+        return res.status(200).json({ status: 200, data: home, message: "Successfully Home Received" });
+    } catch (e) {
+        return res.status(400).json({ status: 400, message: e.message });
+    }
+}
 
 exports.filterHomes = async function (req, res, next) {
     var page = req.query.page ? req.query.page : 1

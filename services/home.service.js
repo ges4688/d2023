@@ -5,34 +5,60 @@ const { authenticate } = require('./auth.service');
 
 _this = this
  
-
- 
-
-exports.createHome = async function (home) {
-    //var hashedPassword = bcrypt.hashSync(home.homeId, 8);
-    
-    var newHome = new Home({
-        name: user.name,
-        email: user.email,
-        cellphone: user.cellphone,
-        date: new Date(),
-        password: hashedPassword
-    })
-
+exports.createHome = async function (homeData) {
+    var newHome = new Home(homeData);
     try {
-        var savedUser = await newUser.save();
-        var token = jwt.sign({
-            id: savedUser._id
-        }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24 hours
-        });
-        return token;
+        var createdHome = await newHome.save();
+        return createdHome;
     } catch (e) {
-        console.log(e)    
-        throw Error("Error while Creating User")
+        console.error("Error while creating Home", e);
+        throw Error("Error while creating Home");
     }
 }
- 
+
+// Actualizar una propiedad existente
+exports.updateHome = async function (oldHome, newHomeData) {
+    try {
+        oldHome.userId = newHomeData.userId;
+        oldHome.homeId = newHomeData.homeId;
+        oldHome.moneda = newHomeData.moneda;
+        oldHome.precio = newHomeData.precio;
+        oldHome.direccion = {
+            calle: newHomeData.direccion.calle,
+            numero: newHomeData.direccion.numero,
+            piso: newHomeData.direccion.piso,
+            dto: newHomeData.direccion.dto,
+            barrio: newHomeData.direccion.barrio,
+            localidad: newHomeData.direccion.localidad,
+            provincia: newHomeData.direccion.provincia,
+            pais: newHomeData.direccion.pais,
+        };
+        oldHome.geolocalizacion = {
+            latitud: newHomeData.geolocalizacion.latitud,
+            longitud: newHomeData.geolocalizacion.longitud,
+        };
+        oldHome.tipoPropiedad = newHomeData.tipoPropiedad;
+        oldHome.operacion = newHomeData.operacion;
+        oldHome.antiguedad = newHomeData.antiguedad;
+        oldHome.cochera = newHomeData.cochera;
+        oldHome.ambientes = newHomeData.ambientes;
+        oldHome.dormitorios = newHomeData.dormitorios;
+        oldHome.banos = newHomeData.banos;
+        oldHome.amenities = newHomeData.amenities;
+        oldHome.metrosCuadrados = {
+            cubiertos: newHomeData.metrosCuadrados.cubiertos,
+            semidescubiertos: newHomeData.metrosCuadrados.semidescubiertos,
+            descubiertos: newHomeData.metrosCuadrados.descubiertos,
+        };
+
+        var updatedHome = await oldHome.save();
+        return updatedHome;
+    } catch (e) {
+        console.error("Error while updating Home", e);
+        throw Error("Error while updating Home");
+    }
+}
+
  
 exports.filterHomes = async function (query, page, limit, searchQuery) {
     var per_page = parseInt(limit) || 10
@@ -63,14 +89,32 @@ exports.filterHomes = async function (query, page, limit, searchQuery) {
     }
 }
 
-
+/*
 exports.getHomes = async function (options) {
     try {
-        var homes = await Home.paginate({}, options);
+        var homes = await Home.find({}, options);
         return homes;
     } catch (e) {
         console.error("Error while getting Homes", e);
         throw Error('Error while getting Homes');
+    }
+}
+*/
+
+exports.getHomes = async function (query, page, limit, searchQuery) {
+    var per_page = parseInt(limit) || 10
+    var page_no = parseInt(page) || 1
+    var pagination = {
+        limit: per_page,
+        skip: per_page * (page_no - 1)
+    }
+    try {
+        var homes = await Home.find({
+        }).limit(pagination.limit).skip(pagination.skip).exec()
+        return homes;
+    } catch (e) {
+        console.log("error services", e);
+        throw Error('Error while searching a recipe');
     }
 }
 
@@ -94,6 +138,17 @@ exports.deleteHomeByHomeId = async function (homeId) {
     } catch (e) {
         console.error("Error while Deleting the Home by homeId", e);
         throw Error("Error while Deleting the Home by homeId");
+    }
+}
+
+
+exports.getHomeByUserId = async function (userId) {
+    try {
+        var home = await Home.find({ userId: userId });
+        return home;
+    } catch (e) {
+        console.log("error services", e);
+        throw Error('Error while getting Home by homeId');
     }
 }
 

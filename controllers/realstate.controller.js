@@ -1,6 +1,7 @@
 var UserService = require('../services/realstate.service');
 var UserImgService =require('../services/userImg.service');
 
+
 _this = this;
 
 exports.getUser = async function (req, res, next) {

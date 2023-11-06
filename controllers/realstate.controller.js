@@ -1,10 +1,14 @@
 var RealStateService = require('../services/realstate.service');
 var RealStateImgService =require('../services/realstateImg.service');
-
+const RealState = require('../models/realstate.model');
 
 _this = this;
 
 exports.getRealState = async function (req, res, next) {
+
+    var page = req.query.page ? req.query.page : 1
+    var limit = req.query.limit ? req.query.limit : 10;
+
     try {
         var RealState = await RealStateService.getRealState(req.params.token)
         return res.status(200).json({status: 200, data: RealState, message: "Succesfully RealState Recieved"});
@@ -13,12 +17,26 @@ exports.getRealState = async function (req, res, next) {
     }
 }
 
+exports.getRealStateById=async function (req,res){
+    var userId=req.body.id ? req.body.id:-1;
+    if(userId!=-1){
+        try{
+        var RealStateReturn=await RealStateService.getRealStatesById(userId);
+        return res.status(200).json({status:200,data:RealStateReturn,message:"Inmobiliaria recibida con exito"})
+        }catch(e){
+            return res.status(400).json({status:400,message:e.message})
+        }   
+    }
+
+}
+
+
 exports.createRealState = async function (req, res, next) {
     console.log("llegue al controller",req.body)
     var RealState = {
-        name: req.body.RealState.name,
-        cellphone: req.body.RealState.cellphone,
+        fantasyName: req.body.RealState.fantasyName,
         email: req.body.RealState.email,
+        emailContact: req.body.RealState.emailContact,  
         password: req.body.RealState.password
     }
     try {
@@ -31,18 +49,29 @@ exports.createRealState = async function (req, res, next) {
 }
 
 exports.updateRealState = async function (req, res, next) {
+      // Id is necessary for the update
+      if (!req.body._id) {
+        return res.status(400).json({status: 400., message: "Id must be present"})
+    }
     var newRealState = {
         token: req.body.RealState.token,
-        name: req.body.RealState.name,
+        fantasyName: req.body.RealState.fantasyName,
         password: req.body.RealState.password
     }
-    try {
-        var oldRealState = await RealStateService.getRealState(newRealState.token);
-        var updatedRealState = await RealStateService.updateRealState(oldRealState, newRealState);
-        return res.status(200).json({status: 200, data: updatedRealState, message: "Succesfully Updated RealState"})
-    } catch (e) {
-        return res.status(400).json({status: 400., message: e.message})
+    var userId= req.body._id;
+    var RealState = {
+        userId,
+        fantasyName: req.body.fantasyName ? req.body.fantasyName : null,
+        email: req.body.email ? req.body.email : null,
+        emailContact: req.body.emailContact ? req.body.emailContact : null,
+        
+
     }
+    try {
+        var updatedEmpresa = await EmpresaService.updateEmpresa(Empresa)
+        return res.status(200).json({status: 200, data: updatedEmpresa, message: "Empresa actualizada correctamente"})
+    } catch (e) {
+        re
 }
 
 exports.removeRealState = async function (req, res, next) {

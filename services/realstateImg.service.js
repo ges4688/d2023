@@ -1,5 +1,5 @@
 // Gettign the Newly created Mongoose Model we just created 
-var UserImg = require('../models/UserImg.model');
+var RealStateImg = require('../models/RealStateImg.model');
 var cloudinary = require('../cloudinary/cloudinary');
 
 var bcrypt = require('bcryptjs');
@@ -18,7 +18,7 @@ exports.getImagenes = async function (query, page, limit) {
     }
     // Try Catch the awaited promise to handle the error 
     try {
-        var Imagenes = await UserImg.paginate(query, options)
+        var Imagenes = await RealStateImg.paginate(query, options)
         // Return the Contact list that was retured by the mongoose promise
         return Imagenes;
 
@@ -29,7 +29,7 @@ exports.getImagenes = async function (query, page, limit) {
 }
 
 // Async function to get the Contact List
-exports.getImagenesByUser = async function (query, page, limit) {
+exports.getImagenesByRealState = async function (query, page, limit) {
 
     // Options setup for the mongoose paginate
     var options = {
@@ -39,10 +39,10 @@ exports.getImagenesByUser = async function (query, page, limit) {
     // Try Catch the awaited promise to handle the error 
     console.log("byId", query)
     try {
-        var UserImagenes = await UserImg.paginate(query, options)
+        var RealStateImagenes = await RealStateImg.paginate(query, options)
         // Return the Control list that was retured by the mongoose promise
-        console.log("imagenes by id", UserImagenes)
-        return UserImagenes;
+        console.log("imagenes by id", RealStateImagenes)
+        return RealStateImagenes;
 
     } catch (e) {
         // return a Error message describing the reason 
@@ -50,37 +50,37 @@ exports.getImagenesByUser = async function (query, page, limit) {
     }
 }
 
-async function savedUserImg(newUserImg) {
+async function savedRealStateImg(newRealStateImg) {
 
     try {
         // Saving the Control 
-        var savedUserImg = await newUserImg.save();
+        var savedRealStateImg = await newRealStateImg.save();
 
-        return savedUserImg;
+        return savedRealStateImg;
     } catch (e) {
         // return a Error message describing the reason 
         console.log(e)
-        throw Error("Error while Creating Imagen User")
+        throw Error("Error while Creating Imagen RealState")
     }
 }
-exports.createUserImg = async function (userImg) {
+exports.createRealStateImg = async function (realstateImg) {
 
     //subir imagen a cloudinary
-    console.log("userImg", userImg)
+    console.log("realstateImg", realstateImg)
     let urlImg;
-    let imagen = process.env.UPLOAD_DIR + userImg.nombreImagen;
+    let imagen = process.env.UPLOAD_DIR + realstateImg.nombreImagen;
     cloudinary.uploader.upload(imagen, function (result) {
         console.log("Resultado", result);
         //urlImg=result.url;
         // Creating a new Mongoose Object by using the new keyword
-        var newUserImg = new UserImg({
-            userId: userImg.userId,
-            homeId: userImg.homeId,
+        var newRealStateImg = new RealStateImg({
+            realstateId: realstateImg.realstateId,
+            homeId: realstateImg.homeId,
             date: new Date(),
-            nameImage : userImg.nameImage,
+            nameImage : realstateImg.nameImage,
             image: result.url
         })
 
-        savedUserImg(newUserImg);
+        savedRealStateImg(newRealStateImg);
     });
 }

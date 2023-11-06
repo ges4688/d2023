@@ -1,87 +1,87 @@
-var UserService = require('../services/realstate.service');
-var UserImgService =require('../services/userImg.service');
+var RealStateService = require('../services/realstate.service');
+var RealStateImgService =require('../services/realstateImg.service');
 
 
 _this = this;
 
-exports.getUser = async function (req, res, next) {
+exports.getRealState = async function (req, res, next) {
     try {
-        var user = await UserService.getUser(req.params.token)
-        return res.status(200).json({status: 200, data: user, message: "Succesfully User Recieved"});
+        var RealState = await RealStateService.getRealState(req.params.token)
+        return res.status(200).json({status: 200, data: RealState, message: "Succesfully RealState Recieved"});
     } catch (e) {
         return res.status(400).json({status: 400, message: e.message});
     }
 }
 
-exports.createUser = async function (req, res, next) {
+exports.createRealState = async function (req, res, next) {
     console.log("llegue al controller",req.body)
-    var User = {
-        name: req.body.user.name,
-        cellphone: req.body.user.cellphone,
-        email: req.body.user.email,
-        password: req.body.user.password
+    var RealState = {
+        name: req.body.RealState.name,
+        cellphone: req.body.RealState.cellphone,
+        email: req.body.RealState.email,
+        password: req.body.RealState.password
     }
     try {
-        var createdUser = await UserService.createUser(User)
-        return res.status(201).json({createdUser, message: "Succesfully Created User"})
+        var createdRealState = await RealStateService.createRealState(RealState)
+        return res.status(201).json({createdRealState, message: "Succesfully Created RealState"})
     } catch (e) {
         console.log(e)
-        return res.status(400).json({status: 400, message: "User Creation was Unsuccesfull"})
+        return res.status(400).json({status: 400, message: "RealState Creation was Unsuccesfull"})
     }
 }
 
-exports.updateUser = async function (req, res, next) {
-    var newUser = {
-        token: req.body.user.token,
-        name: req.body.user.name,
-        password: req.body.user.password
+exports.updateRealState = async function (req, res, next) {
+    var newRealState = {
+        token: req.body.RealState.token,
+        name: req.body.RealState.name,
+        password: req.body.RealState.password
     }
     try {
-        var oldUser = await UserService.getUser(newUser.token);
-        var updatedUser = await UserService.updateUser(oldUser, newUser);
-        return res.status(200).json({status: 200, data: updatedUser, message: "Succesfully Updated User"})
+        var oldRealState = await RealStateService.getRealState(newRealState.token);
+        var updatedRealState = await RealStateService.updateRealState(oldRealState, newRealState);
+        return res.status(200).json({status: 200, data: updatedRealState, message: "Succesfully Updated RealState"})
     } catch (e) {
         return res.status(400).json({status: 400., message: e.message})
     }
 }
 
-exports.removeUser = async function (req, res, next) {
+exports.removeRealState = async function (req, res, next) {
     var id = req.params.id;
     try {
-        var deleted = await UserService.deleteUser(id);
+        var deleted = await RealStateService.deleteRealState(id);
         res.status(200).send("Succesfully Deleted... ");
     } catch (e) {
         return res.status(400).json({status: 400, message: e.message})
     }
 }
 
-exports.loginUser = async function (req, res, next) {
+exports.loginRealState = async function (req, res, next) {
     console.log("body",req.body);
-    var User = req.body.user;
+    var RealState = req.body.RealState;
     try {
-        var loginUser = await UserService.loginUser(User);
-        return res.status(201).json({loginUser, message: "Succesfully login"})
+        var loginRealState = await RealStateService.loginRealState(RealState);
+        return res.status(201).json({loginRealState, message: "Succesfully login"})
     } catch (e) {
-        return res.status(400).json({status: 400, message: "Invalid username or password"})
+        return res.status(400).json({status: 400, message: "Invalid RealStatename or password"})
     }
 }
 
-exports.guardarImagenUser = async function (req, res, next) {
-    console.log("ImgUser",req.body)
+exports.guardarImagenRealState = async function (req, res, next) {
+    console.log("ImgRealState",req.body)
     // Id is necessary for the update
     if (!req.body.email) {
         return res.status(400).json({status: 400., message: "Mail must be present"})
     }
 
-    let userImg = {
+    let RealStateImg = {
         email: req.body.email,
         nombreImagen : req.body.nombreImagen
     }
     
     try {
-        if (userImg.nombreImagen!=='')
+        if (RealStateImg.nombreImagen!=='')
         {
-            var newUserImg = await UserImgService.createUserImg(userImg);
+            var newRealStateImg = await RealStateImgService.createRealStateImg(RealStateImg);
         }
         
         return res.status(201).json({status: 201, message: "Imagen cargada"});
@@ -92,16 +92,16 @@ exports.guardarImagenUser = async function (req, res, next) {
     }
 }
 
-exports.updateAtributesUser = async function (req, res, next) {
-    var newUser = {
-        token: req.body.user.token,
-        name: req.body.user.name,
-        password: req.body.user.password
+exports.updateAtributesRealState = async function (req, res, next) {
+    var newRealState = {
+        token: req.body.RealState.token,
+        name: req.body.RealState.name,
+        password: req.body.RealState.password
     }
     try {
-        var oldUser = await UserService.getUser(newUser.token);
-        var updatedUser = await UserService.updateUser(oldUser, newUser);
-        return res.status(200).json({status: 200, data: updatedUser, message: "Succesfully Updated User"})
+        var oldRealState = await RealStateService.getRealState(newRealState.token);
+        var updatedRealState = await RealStateService.updateRealState(oldRealState, newRealState);
+        return res.status(200).json({status: 200, data: updatedRealState, message: "Succesfully Updated RealState"})
     } catch (e) {
         return res.status(400).json({status: 400., message: e.message})
     }

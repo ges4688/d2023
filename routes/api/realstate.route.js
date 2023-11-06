@@ -4,13 +4,13 @@ var RealStateController = require('../../controllers/realstate.controller');
 var MailController = require('../../controllers/mail.controller');
 var Authorization = require('../../auth/authorization');
 
-router.get('/myProfile/:token', RealStateController.getUser);
-router.post('/updateUser/', RealStateController.updateUser);
-router.post('/registration', RealStateController.createUser);
-router.delete('/:id', Authorization, RealStateController.removeUser);
-router.post('/login', RealStateController.loginUser);
-router.post('/guardarImgUser', RealStateController.guardarImagenUser);
+router.get('/myProfile/:token', RealStateController.getRealState);
+router.post('/updateRealState/', RealStateController.updateRealState);
+router.post('/registration', RealStateController.createRealState);
+router.delete('/:id', Authorization, RealStateController.removeRealState);
+router.post('/login', RealStateController.loginRealState);
+router.post('/guardarImgRealState', RealStateController.guardarImagenRealState);
 router.post('/sendMail', MailController.sendEmail);
-router.post('/updateAtributesUser/', RealStateController.updateUser); // esto es para cambiar más atributos aparte de la password
+router.post('/updateAtributesRealState/', RealStateController.updateRealState); // esto es para cambiar más atributos aparte de la password
 
 module.exports = router;

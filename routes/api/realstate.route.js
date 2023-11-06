@@ -7,6 +7,7 @@ var Authorization = require('../../auth/authorization');
 router.get('/myProfile/:token', RealStateController.getRealState);
 router.post('/updateRealState/', RealStateController.updateRealState);
 router.post('/registration', RealStateController.createRealState);
+router.post('/RealstatePorId', RealStateController.getRealStateById);
 router.delete('/:id', Authorization, RealStateController.removeRealState);
 router.post('/login', RealStateController.loginRealState);
 router.post('/guardarImgRealState', RealStateController.guardarImagenRealState);

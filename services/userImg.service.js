@@ -37,11 +37,11 @@ exports.getImagenesByUser = async function (query, page, limit) {
         limit
     }
     // Try Catch the awaited promise to handle the error 
-    console.log("byDni", query)
+    console.log("byId", query)
     try {
         var UserImagenes = await UserImg.paginate(query, options)
         // Return the Control list that was retured by the mongoose promise
-        console.log("videos by dni", UserImagenes)
+        console.log("imagenes by id", UserImagenes)
         return UserImagenes;
 
     } catch (e) {
@@ -74,9 +74,11 @@ exports.createUserImg = async function (userImg) {
         //urlImg=result.url;
         // Creating a new Mongoose Object by using the new keyword
         var newUserImg = new UserImg({
-            mail: userImg.email,
+            userId: userImg.userId,
+            homeId: userImg.homeId,
             date: new Date(),
-            nombreImagen: result.url
+            nameImage : userImg.nameImage,
+            image: result.url
         })
 
         savedUserImg(newUserImg);

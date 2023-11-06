@@ -30,7 +30,7 @@ exports.getImages = async function (req, res, next) {
 exports.deleteImage = async function (req, res, next) {
     const userId = req.body.userId;
     const homeId = req.body.homeId;
-    const nameImage = req.params.nameImage;
+    const nameImage = req.body.nameImage;
 
     try {
         const deletedImage = await ImgService.deleteImage(userId, homeId, nameImage);

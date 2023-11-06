@@ -6,7 +6,8 @@ const ImgSchema = new mongoose.Schema({
     homeId: { type: String, required: true },
     nameImage: { type: String, required: true },
     dateCreated: Date,
-    images: [{ data: Buffer, contentType: String }] // Almacena las imágenes en formato binario
+    image : { type: String, required: true } // cloudinary folder where upload the image
+    //images: [{ data: Buffer, contentType: String }] // Almacena las imágenes en formato binario
 });
 
 const Img = mongoose.model('Img', ImgSchema);

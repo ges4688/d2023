@@ -2,10 +2,11 @@ var mongoose = require('mongoose')
 var mongoosePaginate = require('mongoose-paginate')
 
 var UserImgSchema = new mongoose.Schema({
-    date: Date,
-    mail: String,
-    nombreImagen: String
-    
+    userId: { type: String, required: true },
+    homeId: { type: String, required: true },
+    nameImage: { type: String, required: true },
+    dateCreated: Date,
+    image : { type: String, required: true }     
 })
 
 UserImgSchema.plugin(mongoosePaginate)

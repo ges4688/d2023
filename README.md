@@ -1,105 +1,48 @@
 # Backend
- 
-# Endpoints !!! A AJUSTAR
-Usuarios:
-- get - /
-- put - /
-- post - /registration
-- delete - /:id
-- post - /login/
-- post - /guardarImgUser
-- post - /uploadImgUser
-- post - /sendMail
+  
 
-Recetas:
-- get - /
-- delete - /
-- post - /
-- get - /getTopRecipes
-- get - /getRecipes/:searchQuery
-- post - /rating
-- post - /imgRecipeCover
-- post - /imgRecipeStep
-
-<!-- PROYECTOS -->
+<!-- PROYECTO -->
 ## Proyectos
-
-| Proyecto | Link |
-| ------ | ------ |
-| **FRONT** | valink |
-| **BACK** | valink |
-
+ 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Equipo de trabajo
- 
+Angel Leonardo
+Wang Jian
+Huber Matias
+Salvia Gonzalo Ezequiel
 
-### Prerequisites
-
-Node
-npm
-Express
-jsonwebtoken
-mongoose
-nodemon
-
-`npm install`
-
-`node app.js`
-
-
-### Clone
-
-- Clone this repo to your local machine using [https://github.com/Abdurraheem/REST-API-JWTWEB-TOKEN.git]
+### Prerequisitos
+Tener instalado node.js
 
 ### Setup
 
-> now install npm and packages
+Al bajar el código a su maquina ( ya sea descargandolo o realizando un pull del repositorio git) abrir una terminal y pararse en la ubicacion donde se encuentra el archivo package.json y ejecutar las instrucciones
 
 ```shell
 $ npm install
-$ bower install (if require)
 ```
+Esta instrucción instalará todos los paquetes necesarios en el proyecto backend.
+
+Una vez finalizada la instalación para levantar la app ejecutar
+
+```shell
+$ node app.js
+```
+En caso que precise implementar una libreria extra no olvide efectuar nuevamente el "npm install"
+ 
+
+## Tests
+
+Para correr pruebas con postman es necesario que el body sea pasado como un json y dependiendo del endpoint a probar setear en el request el header x-access-token con el token generado luego del login.
+
+Estructura modelo de la prueba local http://localhost:4000/api/{base_endpoint}/{endpoint}
+Ejemplo 
+http://localhost:4000/api/users/registration
 
 
-## Running the tests
-
-It consist of a User model and controller. The model
-defines the data, and the controller will contain all 
-the business logic needed to interact with the database. 
-
-It has a db file which will be used to
-connect the app to the database, and an app file used
-for bootstrapping the application itself.
-
-The server file is used to spin up the server and tells the
-app to listen on a specific port.
-
-Let’s test this out. Why not?
-Open up your REST API testing tool of choice, I use Postman or Insomnia, but any will do.
-
-Go back to your terminal and run node server.js. If it is running, stop it, save all changes to you files, and run node server.js again.
-
-Open up your REST API testing tool of choice, I use Postman or Insomnia, but any will do.
-
-Go back to your terminal and run node server.js. If it is running, stop it, save all changes to you files, and run node server.js again.
-
-Open up Postman and hit the register endpoint (http://localhost:3000/api/users/registration). Make sure to pick the POST method and x-www-form-url-encoded.
-Now, add some values. My user’s name is 'Mohammad' , email is 'mohdabdur786@gmail.com' and his password is 'Wow@123' 
-
-See the response? The token is a long jumbled string. 
-To try out the http://localhost:3000/api/users endpoint, first copy the token. Change the URL to http://localhost:3000/api/users , and the method to GET.
-Now you can add the token to the request header.
-
-You will get list of users...
-
-Try to update users the http://localhost:3000/api/users endpoint, and the method to PUT with x-www-form-url-encoded.
-Now, add some values.Update name is 'Abdur' , email is 'mohdabdur786@gmail.com' and his password is 'Wow@123' 
-
-Delete some users hit http://localhost:3000/api/users/(_id) endpoint with the method DELETE.
-
-##Disclaimer: The logout endpoint is not needed. The act of logging out can solely be done through the client side. A token is usually kept in a cookie or the browser’s localstorage. Logging out is as simple as destroying the token on the client. This /logout endpoint is created to logically depict what happens when you log out. The token gets set to null.
+##Disclaimer: Asumimos que el endpoint logout no es necesario de implementar pues del lado del cliente con la destruccion de la cookie/localstorage client side que persiste el token no es necesaria la implementacion. 
 
 ## License
 
